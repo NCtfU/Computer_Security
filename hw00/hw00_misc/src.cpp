@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
     cin.ignore(0xbad, '\n');
 
 	cout << "The value: " << value << endl;
+	cout << "The balance: " << balance << endl;
 
     count++;
   }
