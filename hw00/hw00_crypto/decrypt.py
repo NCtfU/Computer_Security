@@ -12,9 +12,6 @@ def convert(data: bytes, size=4): # 把 data 分成 size=4 的 block, element is
 def invert(data, size=4): # hex 轉成 bytes
     return b''.join([element.to_bytes(size, 'big') for element in data])
 
-
-
-
 def _encrypt(v: List[int], k: List[int]):
     total, delta, mask = 0, 0xFACEB00C, 0xffffffff
     for _ in range(32):
@@ -50,6 +47,8 @@ if __name__ != '__main__':
     
     print(f'd_content = {d_content.hex()}')
     exit(1)
+
+""" payload start """
 
 def _decrypt(v: List[int], k: List[int]):
     total, delta, mask = 0x59d60180, 0xFACEB00C, 0xffffffff
