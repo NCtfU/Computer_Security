@@ -1,4 +1,6 @@
-# hw00
+# Hw00
+
+> My ID is 🎃.
 
 ## owoHub 🚝 (web)
 
@@ -38,7 +40,7 @@ And `cute` can be used to build payload because the rule only judges `cute` if e
 - Calculate the buffer size (45-21 = 24)
   - sol 2: pwntool cyclic and cyclic.find()
 
-Payload is that sending 24 'a' and return address of the start of func1
+Payload is that sending 24 'a' and return address of the start of func1</br>
 ![](hw00_pwn/3.png)
 
 There will be a messages telling us it is almost done.</br>
@@ -79,6 +81,7 @@ My payload:
 3. -1000
 4. -90008000
 5. goto 1.
+
 Everytime you do 1~4, you will get $1024.</br>
 When you do it three times repeatly, you will get $3072 and flag!
 
