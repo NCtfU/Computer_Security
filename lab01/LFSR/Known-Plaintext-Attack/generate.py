@@ -13,6 +13,8 @@ class LFSR:
         return cls(init, feedback)
     def getbit(self):
         nextbit = reduce(lambda x, y: x ^ y, [i & j for i, j in zip(self.state, self.feedback)])
+        print(self.state[1:])
+        print([nextbit])
         self.state = self.state[1:] + [nextbit]
         return nextbit
     def getbyte(self):

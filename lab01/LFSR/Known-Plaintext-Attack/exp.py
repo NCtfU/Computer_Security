@@ -1,5 +1,5 @@
 import random
-from construct import bytes2bits
+from sage.all import *
 
 class LFSR:
     def __init__(self, init, feedback):
@@ -23,19 +23,40 @@ class LFSR:
 def xor(a, b):
     return bytes([i ^ j for i, j in zip(a, b)])
 
+def bytes2bits(x):
+    return [int(i) for i in f'{int.from_bytes(x, "big"):0{len(x) * 8}b}']
+
 """
 FLAG = open('./flag', 'rb').read()
 assert FLAG.startswith(b'CTF{')
 
 lfsr = LFSR.random(16)
-key = b''.join([lfsr.getbyte() for i in range(len(FLAG))])
+key = b''.join([lfsr.getbyte() for i in range(len(FLAG))]) # use lfsr to generate key which len is 9
 print(f'enc = {xor(FLAG, key).hex()}')
 """
 
-enc = bytes.fromhex('d0aa72cef8dab5baac') # flag start with 'CTF{'
+enc = bytes.fromhex('d0aa72cef8dab5baac') # flag start with 'CTF{', and len(flag) == 9
 stream = xor(enc[:4], b'CTF{') # part of key
-print(stream)
-print(bytes2bits(stream))
 s = [GF(2)(i) for i in bytes2bits(stream)] # transfer to bit, and then transfer to GF to limit value range (0~1)
-feedback = ([0]*16 + berlekamp_massey(s).list()[:-1])[-16:] # less than 
+# because feedback size is 16, we can use 32 bit (16*2) S to find the feedback
 
+feedback = ([0]*16 + berlekamp_massey(s).list()[:-1])[-16:] # less than 16, filled with 0
+feedback = list(map(int, feedback))
+print("Feedback: ", end='')
+print(feedback)
+# get plain
+lfsr = LFSR(bytes2bits(stream)[16:], feedback) # let init be stream[16:], and it will generate the rest of key stream (5 bytes)
+key = b''.join([lfsr.getbyte() for _ in range(5)])
+plain = xor(enc[4:], key)
+print(key)
+print(plain)
+
+
+
+
+# get all plain
+lfsr = LFSR(bytes2bits(stream)[:16], feedback)
+key = b''.join([lfsr.getbyte() for _ in range(9)])
+print(key)
+plain = xor(enc, key)
+print(plain)
