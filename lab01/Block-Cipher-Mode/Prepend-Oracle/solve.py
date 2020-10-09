@@ -2,7 +2,7 @@
 import string
 from pwn import *
 
-r = remote('127.0.0.1', 20000)
+r = remote('127.0.0.1', 20001)
 
 def oracle(m):
     r.sendlineafter('message = ', m.hex())
@@ -11,6 +11,7 @@ def oracle(m):
 flag = b''
 for i in range(19):
     prefix = b'A' * (32 - 1 - i)
+    print(prefix.hex())
     target = oracle(prefix)[:32]
     for c in string.printable:
         test = oracle(prefix + flag + bytes([ord(c)]))[:32]

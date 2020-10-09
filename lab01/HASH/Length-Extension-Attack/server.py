@@ -19,6 +19,9 @@ def main():
 
         token = input("input your token: ").strip()
         auth = input("input your authentication code: ").strip()
+        
+        print("Your token", b64decode(token.encode()))
+        print("Your authentication code:", hashlib.sha256(salt + b64decode(token.encode())).hexdigest())
 
         if auth == hashlib.sha256(salt + b64decode(token.encode())).hexdigest():
             if b"user=admin" in b64decode(token):

@@ -17,7 +17,4 @@ def main():
         cipher = aes.encrypt(pad(message + FLAG))
         print(f'cipher = {cipher.hex()}')
 
-try:
-    main()
-except:
-    ...
+main()
