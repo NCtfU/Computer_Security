@@ -73,8 +73,8 @@ def oracle(text):
 
 flag = b''
 for i in range(32, len(enc), 16):
-    # ans = b'\x00\x00\x00\x00\x00\x00\x00\x00' 第二輪
-    ans = b''
+    ans = b'\x00\x00\x00\x00\x00\x00\x00\x00' # 第二輪
+    #ans = b''
     iv = enc[i-16:i] # e.g. 71e32b962e8eafdd62a9c55a4af44ce5
     block = enc[i:i+16] # e.g 0eb793e55975dca193e8ca93853bb21c
     print(iv.hex(), block.hex()) 
