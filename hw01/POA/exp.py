@@ -28,32 +28,6 @@ def unpad(data):
             raise PaddingError
     raise PaddingError
 
-def encrypt(plain):
-    # random iv
-    iv = os.urandom(16)
-    # encrypt
-    aes = AES.new(key, AES.MODE_CBC, iv) 
-    cipher = aes.encrypt(pad(plain))
-    return iv + cipher
-
-def decrypt(cipher):
-    # split iv, cipher
-    iv, cipher = cipher[:16], cipher[16:]
-    # decrypt
-    aes = AES.new(key, AES.MODE_CBC, iv) 
-    plain = aes.decrypt(cipher)
-    return unpad(plain)
-
-def main():
-    print(f'cipher = {encrypt(flag).hex()}')
-    while True:
-        try:
-            decrypt(bytes.fromhex(input('cipher = ')))
-            print('YESSSSSSSS')
-        except PaddingError:
-            print('NOOOOOOOOO')
-        except:
-            return
 
 def xor(a, b):
     return bytes([i^j for i,j in zip(a,b)])
@@ -100,8 +74,3 @@ print(flag)
 如果不是 e5, 則嘗試送 payload 過去確定是否符合標準
 使得 dec xor payload 為 0x80
 """
-
-
-
-
-
