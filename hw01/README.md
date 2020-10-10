@@ -131,15 +131,18 @@ Same as  `flag[4:6]`.
 #### For flag[0:2]
 Once we get `flag[2:6]`, all we need to do is brute force 2 bytes, trying to make the probability of degree of similarity between output of **our `MYLFSR` is 100% same as `output.txt`**, then we will get the all flag.
 
+<br><br><br>
+
 ## POA (Padding Oracle Attack)
 Normally, if plaintext isn't multiple of 16, server will automatically pad it for us.<br>
 The padding is usually with `bytes( [n] )*( n = (16 - len(plaintext)%16) )`, but sometimes it will define by user. Like this time, the padding is `bytes( [1] ) + bytes( [0] )*( n = (16 - len(plaintext)%16 - 1) )`.<br><br>
 
 As we know, the server will print YES if encryption is successfully decrypted, and when:<br>
-1. padding is correct
-2. decryption is complete and loseless
+1. Padding is correct
+2. Ciphertext is complete and loseless
+
 , encryption will be successfully decrypted.<br>
-We can build a payload which can pass server's padding rule, and **xor with byte** we build to **get decrypt**, then **xor with origin byte** to **get plaintext**.<br>
+We can build a payload which can pass server's padding rule, and **xor with byte** we build to **get decrypt**, then **xor with origin byte** to **get plaintext**.<br><br>
 Pseudo code:<br>
 ```python
 for value in range(0, 256): # bytes range
@@ -232,5 +235,5 @@ print(flag)
 """
 ```
 <br><br>
-The 2th round, we are going to POA the 16~32 block, will get initial answer `b'\x00\x00\x00\x00\x00\x00\x00\x00'` by default, it is because if `b'\x80\x00...\x00'` are origin bytes, server will regard `b'\x00'` as correct answer and response with `'YES'`, the condition passing the rule will increase and payload will becomes more complex.<br>
+The 2th round, we are going to POA the 16~32 block, will get initial answer `b'\x00\x00\x00\x00\x00\x00\x00\x00'` by default, it is because if `b'\x80\x00...\x00'` are origin bytes, server will regard `b'\x00'` as correct answer and response with `'YES'`, the condition passing the rule will increase and payload will becomes more complex.<br><br>
 I also think that 2th block of flag may be padded, so I manually append multiple of `b'\x00'` to initial answer, and finally appending `b'\x00\x00\x00\x00\x00\x00\x00\x00'` to initial answer, server will get me correct flag!
