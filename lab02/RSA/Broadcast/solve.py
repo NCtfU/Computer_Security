@@ -19,7 +19,9 @@ def crt(a, m):
         x = a_n (mod m_n)
     Output: x
     '''
+    
     prod, total = functools.reduce(lambda x, y: x * y, m), 0
+    print(prod)
     for ai, mi in zip(a, m):
         Mi = prod // mi
         total += ai * Mi * (gmpy2.gcdext(Mi, mi)[1] % mi)

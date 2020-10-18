@@ -40,6 +40,7 @@ def solve(a, b, c):
 def wiener(n, e):
     kd = convergents(cf_expansion(e, n))
     for i, (k, d) in enumerate(kd):
+        print(i, k, d)
         if k == 0:
             continue
         phi = (e * d - 1) // k

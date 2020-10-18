@@ -46,6 +46,7 @@ def oracle(text):
         return False
 
 flag = b''
+#for i in range(32, len(enc), 16):
 for i in range(32, len(enc), 16):
     ans = b'\x00\x00\x00\x00\x00\x00\x00\x00' # 第二輪
     #ans = b''
