@@ -18,6 +18,7 @@ for i in range(1024):
     L, R = L * 2, R * 2
     L += m == 1
     R -= m == 0
+    print(m, L, R)
 
 print(long_to_bytes(L * n // (1 << 1024)))
 print(long_to_bytes(R * n // (1 << 1024)))
